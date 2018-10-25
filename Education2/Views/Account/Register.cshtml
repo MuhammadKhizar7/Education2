@@ -1,0 +1,122 @@
+﻿@model Education2.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href=" images/favicon.png">
+    <title>Clean Zone</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,200,100' rel='stylesheet' type='text/css'>
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .form-horizontal .checkbox, .form-horizontal .checkbox-inline {
+            padding-top: 0px;
+        }
+
+        .check-bx {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            display: block;
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            background: rgb(255, 255, 255);
+            border: 0px;
+            opacity: 0;
+        }
+    </style>
+
+</head>
+<body>
+    @*     @{ *@
+    @*         Html.RenderPartial("_Header"); *@
+    @*     } *@
+    <div id="cl-wrapper">
+        <div class="container">
+
+            <div class="col-sm-5 col-md-5 col-sm-offset-3">
+                <div class="block-flat">
+                    <div class="header">
+                        <h3>@ViewBag.Title</h3>
+                    </div>
+                    <div class="content">
+
+                        @using (Html.BeginForm("Register", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new {@class = "col-md-4 control-label"})
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new {@class = "col-md-4 control-label"})
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-4 control-label"})
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-10">
+                                    <button type="submit" class="btn btn-primary">@ViewBag.Title</button>
+                                    <button class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        jQuery.validator.setDefaults({
+            highlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                    $(element).closest('.control-group').removeClass('success').addClass('error');
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                    $(element).closest('.control-group').removeClass('error').addClass('success');
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
