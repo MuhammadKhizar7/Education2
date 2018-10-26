@@ -4,8 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using Education2.Models;
 
 namespace Education2.Controllers
@@ -123,6 +127,48 @@ namespace Education2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ChangePassword(string email)
+        {
+            return View("ChangePassword");
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+
+            var user = await manager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ChangePassword", "Users");
+            }
+
+            var token = manager.GeneratePasswordResetToken(user.Id);
+            var result = await manager.ResetPasswordAsync(user.Id, token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ChangePassword", "Users");
+            }
+            AddErrors(result);
+            return View();
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
     }
 }
