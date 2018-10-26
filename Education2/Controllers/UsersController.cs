@@ -10,6 +10,7 @@ using Education2.Models;
 
 namespace Education2.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

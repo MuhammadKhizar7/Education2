@@ -1,0 +1,15 @@
+﻿    <div class="page-head">
+    <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            @* <li><a href="#">Home</a></li> *@
+            @* <li><a href="#">Form</a></li> *@
+            @* <li class="active">Elements</li> *@
+            @Html.ActionLink("Home", "Index", "Home")
+            @if(ViewContext.RouteData.Values["controller"].ToString() != "Home") {
+                @:> @Html.ActionLink(ViewContext.RouteData.Values["controller"].ToString(), "Index", ViewContext.RouteData.Values["controller"].ToString()) 
+            }
+            @if(ViewContext.RouteData.Values["action"].ToString() != "Index"){
+                @:> @Html.ActionLink(ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString()) 
+            }
+        </ol>
+    </div>
