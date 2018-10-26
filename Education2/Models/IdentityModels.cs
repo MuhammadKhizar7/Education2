@@ -12,7 +12,7 @@ namespace Education2.Models
     {
         [Required]
         public string Name { get; set; }
-        public int Mobile { get; set; }
+        public string Mobile { get; set; }
         public string Address { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

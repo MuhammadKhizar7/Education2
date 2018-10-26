@@ -214,6 +214,10 @@
     <Compile Include="Migrations\201810251629014_AddMembership.Designer.cs">
       <DependentUpon>201810251629014_AddMembership.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810261305560_addImageToBookEntity.cs" />
+    <Compile Include="Migrations\201810261305560_addImageToBookEntity.Designer.cs">
+      <DependentUpon>201810261305560_addImageToBookEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -481,6 +485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810251629014_AddMembership.resx">
       <DependentUpon>201810251629014_AddMembership.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810261305560_addImageToBookEntity.resx">
+      <DependentUpon>201810261305560_addImageToBookEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

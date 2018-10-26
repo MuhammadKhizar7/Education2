@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +20,32 @@ namespace Education2.Controllers
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Users
         public ActionResult Index()
@@ -51,16 +79,20 @@ namespace Education2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public async Task<ActionResult> Create(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Mobile = model.Mobile, PhoneNumber =model.PhoneNumber , Address = model.Address  };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Users");
+                }
+                AddErrors(result);
             }
 
-            return View(applicationUser);
+            return View(model);
         }
 
         // GET: Users/Edit/5
@@ -83,13 +115,22 @@ namespace Education2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,Mobile,Name,Address,PhoneNumber")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                applicationUser.UserName = applicationUser.Email;
+                try
+                {
+                    db.Entry(applicationUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbEntityValidationException e)
+                {
+                    var newException = new FormattedDbEntityValidationException(e);
+                    throw newException;
+                }
             }
             return View(applicationUser);
         }
@@ -168,6 +209,45 @@ namespace Education2.Controllers
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
+            }
+        }
+        public class FormattedDbEntityValidationException : Exception
+        {
+            public FormattedDbEntityValidationException(DbEntityValidationException innerException) :
+                base(null, innerException)
+            {
+            }
+
+            public override string Message
+            {
+                get
+                {
+                    var innerException = InnerException as DbEntityValidationException;
+                    if (innerException != null)
+                    {
+                        StringBuilder sb = new StringBuilder();
+
+                        sb.AppendLine();
+                        sb.AppendLine();
+                        foreach (var eve in innerException.EntityValidationErrors)
+                        {
+                            sb.AppendLine(string.Format("- Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().FullName, eve.Entry.State));
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                sb.AppendLine(string.Format("-- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                                    ve.PropertyName,
+                                    eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                                    ve.ErrorMessage));
+                            }
+                        }
+                        sb.AppendLine();
+
+                        return sb.ToString();
+                    }
+
+                    return base.Message;
+                }
             }
         }
     }

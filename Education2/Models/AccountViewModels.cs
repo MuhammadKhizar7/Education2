@@ -65,6 +65,11 @@ namespace Education2.Models
     public class RegisterViewModel
     {
         [Required]
+        public string Name { get; set; }
+        public string Mobile { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
