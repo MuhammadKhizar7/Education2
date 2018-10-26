@@ -157,7 +157,7 @@ namespace Education2.Controllers
             var result = await manager.ResetPasswordAsync(user.Id, token, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ChangePassword", "Users");
+                return RedirectToAction("Index", "Users");
             }
             AddErrors(result);
             return View();
