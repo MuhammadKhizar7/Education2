@@ -35,7 +35,7 @@ namespace Education2
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Content/assets/js/bootstrap.js"));
+                      "~/Content/assets/js/bootstrap/dist/js/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/assets/js/bootstrap/dist/css/bootstrap.css",

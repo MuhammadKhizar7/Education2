@@ -78,8 +78,8 @@
 
     $(document).ready(function () {
         //initialize the javascript
-        App.init();
-        App.dataTables();
+//        App.init();
+//        App.dataTables();
 
         /* Formating function for row details */
         function fnFormatDetails(oTable, nTr) {
@@ -98,7 +98,7 @@
          */
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
-        nCloneTd.innerHTML = '<img class="toggle-details" src="images/plus.png" />';
+        nCloneTd.innerHTML = '<img class="toggle-details" src="~/Content/assets/images/plus.png" />';
         nCloneTd.className = "center";
 
         $('#datatable2 thead tr').each(function () {

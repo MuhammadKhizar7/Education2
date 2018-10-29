@@ -36,14 +36,17 @@
     </div>
 
          @Scripts.Render("~/bundles/jquery") 
-         @Scripts.Render("~/bundles/bootstrap") 
-         @RenderSection("scripts", required: false) 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //initialize the javascript
-            App.init();
-        });
-    </script>
+            @Scripts.Render("~/bundles/bootstrap") 
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    //initialize the javascript
+                    App.init();
+                    App.dataTables();
+                });
+            </script>
+            @RenderSection("scripts", required: false) 
+               
     
 </body>
 <!-- Mirrored from condorthemes.com/cleanzone/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 11 Feb 2014 06:35:33 GMT -->
