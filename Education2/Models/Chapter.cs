@@ -6,17 +6,16 @@ using System.Web;
 
 namespace Education2.Models
 {
-    public class Book
+    public class Chapter
     {
         public int Id { get; set; }
 
-        [Required]
         public string Title { get; set; }
 
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
-        public ICollection<Chapter> Chapters { get; set; }
-
-
+        [Display(Name = "Select Book")]
+        public int BookId { get; set; }
+        public Book Book { get; set; }
+        public ICollection<Topic> Topics { get; set; }
     }
 }

@@ -175,9 +175,8 @@ namespace Education2.Controllers
             return View("ChangePassword");
         }
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(NewPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -194,8 +193,13 @@ namespace Education2.Controllers
                 return RedirectToAction("ChangePassword", "Users");
             }
 
-            var token = manager.GeneratePasswordResetToken(user.Id);
-            var result = await manager.ResetPasswordAsync(user.Id, token, model.Password);
+            //            var token =await manager.GeneratePasswordResetTokenAsync(user.Id);
+            //            var result = await manager.ResetPasswordAsync(user.Id, token, model.Password);
+            //            user.PasswordHash = manager.PasswordHasher.HashPassword(model.Password);
+            //            var result = await manager.UpdateAsync(user);
+//            var token = await manager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var result = await manager.ChangePasswordAsync(user.Id, model.NewPassword, model.OldPassword);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Users");

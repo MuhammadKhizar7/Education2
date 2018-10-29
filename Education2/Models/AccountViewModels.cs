@@ -114,4 +114,19 @@ namespace Education2.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class NewPasswordViewModel
+    {
+        public int UserId { get; set; }
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        public string OldPassword { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string NewPassword { get; set; }
+    }
 }

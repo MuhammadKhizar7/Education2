@@ -35,8 +35,11 @@ namespace Education2.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Education2.Models.Book> Books { get; set; }
+        public System.Data.Entity.DbSet<Book> Books { get; set; }
 
-//        public System.Data.Entity.DbSet<Education2.Models.ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+
+        public System.Data.Entity.DbSet<Chapter> Chapters { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
-﻿@model Education2.Models.Book
+﻿@model Education2.Models.Chapter
 
 @{
-    ViewBag.Title = "Edit Book";
+    ViewBag.Title = "Edit Chapter";
 }
 
 @Html.Partial("breadcrumb")
@@ -16,7 +16,7 @@
             </div>
             <div class="content">
 
-                @using (Html.BeginForm("Create", "Books", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Edit", "Chapters", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -28,10 +28,19 @@
                             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BookId, "BookId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Description,  new { @class = "form-control", @cols = 80, @rows = 10  })
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @cols = 80, @rows = 10 })
                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                         </div>
                     </div>

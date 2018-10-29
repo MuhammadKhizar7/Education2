@@ -196,8 +196,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ChaptersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,11 +220,17 @@
     <Compile Include="Migrations\201810261305560_addImageToBookEntity.Designer.cs">
       <DependentUpon>201810261305560_addImageToBookEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810290807326_AddChapterAndTopicEntities.cs" />
+    <Compile Include="Migrations\201810290807326_AddChapterAndTopicEntities.Designer.cs">
+      <DependentUpon>201810290807326_AddChapterAndTopicEntities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Topic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -459,6 +467,16 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\breadcrumb.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
+    <Content Include="Views\Topics\Create.cshtml" />
+    <Content Include="Views\Topics\Delete.cshtml" />
+    <Content Include="Views\Topics\Details.cshtml" />
+    <Content Include="Views\Topics\Edit.cshtml" />
+    <Content Include="Views\Topics\Index.cshtml" />
+    <Content Include="Views\Chapters\Create.cshtml" />
+    <Content Include="Views\Chapters\Delete.cshtml" />
+    <Content Include="Views\Chapters\Details.cshtml" />
+    <Content Include="Views\Chapters\Edit.cshtml" />
+    <Content Include="Views\Chapters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -488,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810261305560_addImageToBookEntity.resx">
       <DependentUpon>201810261305560_addImageToBookEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290807326_AddChapterAndTopicEntities.resx">
+      <DependentUpon>201810290807326_AddChapterAndTopicEntities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
